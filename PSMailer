@@ -1,0 +1,15 @@
+$ExcelFile = "C:\Users\user\Documents\EmailList.xlsx"
+$SheetName = "Sheet1"
+$Recipients = Import-Excel -Path $ExcelFile -WorksheetName $SheetName
+$SMTPServer = "smtp.gmail.com"
+$SMTPPort = 587
+$SMTPUsername = "youremail@gmail.com"
+$SMTPPassword = "yourpassword"
+$From = "youremail@gmail.com"
+$Subject = "Email Subject"
+$Body = "Email Body"
+
+foreach ($Recipient in $Recipients) {
+    $To = $Recipient.EmailAddress
+    Send-MailMessage -To $To -From $From -Subject $Subject -Body $Body -SmtpServer $SMTPServer -Port $SMTPPort -UseSsl -Credential (New-Object System.Management.Automation.PSCredential ($SMTPUsername, (ConvertTo-SecureString $SMTPPassword -AsPlainText -Force)))
+}
