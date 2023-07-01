@@ -86,3 +86,7 @@ if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
         $To=$EmailAddress.ToString()
         $Body=$BodyTemplate -replace "__FirstName__", $Recipient.FirstName -replace "__LastName__", $Recipient.LastName -replace "__Email__", $Recipient.EmailAddress
         Send-MailMessage -To $To -From $From -Subject $textbox1.Text -Body $Body -SmtpServer $SMTPServer -Port $SMTPPort
+    }
+}
+
+$form.Dispose()
