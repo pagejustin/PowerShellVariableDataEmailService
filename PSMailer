@@ -1,9 +1,9 @@
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
-$ExcelFile = "C:\Users\user\Documents\EmailList.xlsx"
+$ExcelFile = ""
 $SheetName = "Sheet1"
-$Recipients = Import-Excel -Path $ExcelFile -WorksheetName $SheetName
+$Recipients = @()
 $SMTPServer = "smtp.gmail.com"
 $SMTPPort = 587
 $SMTPUsername = "youremail@gmail.com"
@@ -36,8 +36,27 @@ foreach ($Recipient in $Recipients) {
 }
 $form.Controls.Add($listbox1)
 
+$button3 = New-Object System.Windows.Forms.Button
+$button3.Location = New-Object System.Drawing.Point(10, 280)
+$button3.Size = New-Object System.Drawing.Size(75, 23)
+$button3.Text = "Select Excel File"
+$form.Controls.Add($button3)
+
+$button3.Add_Click({
+    $openFileDialog = New-Object System.Windows.Forms.OpenFileDialog
+    $openFileDialog.Filter = "Excel Files (*.xlsx)|*.xlsx|All files (*.*)|*.*"
+    $openFileDialog.Title = "Select an Excel File"
+    if ($openFileDialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
+        $ExcelFile=$openFileDialog.FileName
+        $Recipients=Import-Excel -Path $ExcelFile -WorksheetName $SheetName
+        foreach ($Recipient in $Recipients) {
+            $listbox1.Items.Add($Recipient.EmailAddress)
+        }
+    }
+})
+
 $button1 = New-Object System.Windows.Forms.Button
-$button1.Location = New-Object System.Drawing.Point(10,280)
+$button1.Location = New-Object System.Drawing.Point(100,280)
 $button1.Size = New-Object System.Drawing.Size(75,23)
 $button1.Text = "Send"
 $button1.DialogResult = [System.Windows.Forms.DialogResult]::OK
@@ -45,7 +64,7 @@ $form.AcceptButton = $button1
 $form.Controls.Add($button1)
 
 $button2 = New-Object System.Windows.Forms.Button
-$button2.Location = New-Object System.Drawing.Point(100,280)
+$button2.Location = New-Object System.Drawing.Point(190,280)
 $button2.Size = New-Object System.Drawing.Size(75,23)
 $button2.Text = "Cancel"
 $button2.DialogResult = [System.Windows.Forms.DialogResult]::Cancel
