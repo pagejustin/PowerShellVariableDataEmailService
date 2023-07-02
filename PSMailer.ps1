@@ -1,3 +1,9 @@
+$ExcelFile = "C:\Users\user\Documents\EmailList.xlsx"
+$SheetName = "Sheet1"
+$Recipients = Import-Excel -Path $ExcelFile -WorksheetName $SheetName
+$SMTPServer = "smtp.gmail.com"
+$SMTPPort = 587
+$SMTPUsername = "youremail@gmail.com"
 $SMTPPassword = "yourpassword"
 $From = "youremail@gmail.com"
 $Subject = "Email Subject"
