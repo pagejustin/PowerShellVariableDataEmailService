@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    A short one-line action-based description, e.g. 'Tests if a function is valid'
+    Simple PowerShell for programmers that know how to read PowerShell, write HTML, and have a variable data file ready.
 .DESCRIPTION
     A longer description of the function, its purpose, common use cases, etc.
 .NOTES
